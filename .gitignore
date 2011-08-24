@@ -1,6 +1,8 @@
 *.gem
 .bundle
 .DS_Store
-Gemfile.lock
 pkg/*
 test/dummy
+.rvmrc
+spec/test_app
+.rspec

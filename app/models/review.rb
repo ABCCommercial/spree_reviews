@@ -5,6 +5,10 @@ class Review < ActiveRecord::Base
 
   validates_presence_of :name, :review
   validates_numericality_of :rating, :only_integer => true
+
+  after_save :recalculate_rating
+  after_destroy :recalculate_rating
+
   default_scope order("reviews.created_at DESC")
   scope :approved,  where("approved = ?", true)
   scope :not_approved, where("approved = ?", false)
@@ -19,4 +23,9 @@ class Review < ActiveRecord::Base
     return 0 if feedback_reviews.count <= 0
     ((feedback_reviews.sum(:rating)/feedback_reviews.count) + 0.5).floor
   end
+
+  def recalculate_rating
+    self.product.recalculate_rating
+  end
 end
+

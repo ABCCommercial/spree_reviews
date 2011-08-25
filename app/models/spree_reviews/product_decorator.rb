@@ -12,9 +12,9 @@ module SpreeReviews
     end
 
     def recalculate_rating
-      reviews_count = reviews.reload.approved.count
+      reviews_count = self.reviews.reload.visible.count
       if reviews_count > 0
-        self.update_attributes(:avg_rating => self.reviews.approved.sum(:rating).to_f / reviews_count, :reviews_count => reviews_count)
+        self.update_attributes(:avg_rating => self.reviews.visible.sum(:rating).to_f / reviews_count, :reviews_count => reviews_count)
       else
         self.update_attribute :avg_rating, 0
       end

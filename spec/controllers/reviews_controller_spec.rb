@@ -34,6 +34,9 @@ describe ReviewsController do
       @product.reviews.count.should == 1
       @product.reviews.approved.count.should == 0
       @product.avg_rating.should == 0
+
+      review = @product.reviews.first
+      review.user.should == @user
     end
   end
 end

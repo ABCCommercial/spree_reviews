@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Reviews do
+describe Review do
   before(:each) do
-    @reviews = Reviews.new
+    @review = Review.new
   end
 
   it "should be valid" do
-    @reviews.should be_valid
+    @review.should be_valid
   end
 end

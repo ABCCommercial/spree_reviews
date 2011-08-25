@@ -1,21 +1,8 @@
 require 'spree_core'
+require 'spree_auth'
 require 'spree_reviews_hooks'
 
 module SpreeReviews
-  
-  class AbilityDecorator
-    include CanCan::Ability
-
-    def initialize(user)
-      can :create, Review do |review|
-        user.has_role?(:user) || !Spree::Reviews::Config[:require_login]
-      end
-      can :create, FeedbackReview do |review|
-        user.has_role?(:user) || !Spree::Reviews::Config[:require_login]
-      end
-    end
-  end
-
   class Engine < Rails::Engine
 
     config.autoload_paths += %W(#{config.root}/lib)
@@ -25,7 +12,7 @@ module SpreeReviews
         Rails.env.production? ? require(c) : load(c)
       end
       ProductsHelper.send(:include, ReviewsHelper)
-      Ability.register_ability(AbilityDecorator)
+      ::Ability.register_ability(SpreeReviews::Ability)
     end
 
     config.to_prepare &method(:activate).to_proc

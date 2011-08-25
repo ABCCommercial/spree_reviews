@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     spree_reviews (0.50.1)
+      spree_auth (>= 0.50.0)
       spree_core (>= 0.50.0)
 
 GEM

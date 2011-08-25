@@ -1,6 +1,6 @@
 class SpreeReviewsHooks < Spree::ThemeSupport::HookListener
   insert_after :product_properties do
-    %w(<%= render :partial => 'shared/reviews', :locals => { :product => @product, :reviews => @product.reviews.visible } %>)
+    %(<%= render :partial => 'shared/reviews', :locals => { :product => @product, :reviews => @product.reviews.visible } %>)
   end
 
   insert_after :inside_head do

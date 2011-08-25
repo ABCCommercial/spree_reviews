@@ -10,8 +10,10 @@ class Review < ActiveRecord::Base
   after_destroy :recalculate_rating
 
   default_scope order("reviews.created_at DESC")
-  scope :approved, lambda {|*args| {:conditions => ["(? = ?) or (approved = ?)", Spree::Reviews::Config[:include_unapproved_reviews], true, true ]}}
+  scope :approved,     where("approved = ?", true)
   scope :not_approved, where("approved = ?", false)
+
+  scope :visible, lambda {|*args| {:conditions => ["(? = ?) or (approved = ?)", Spree::Reviews::Config[:include_unapproved_reviews], true, true ]}}
 
   scope :oldest_first, :order => "created_at asc"
   scope :preview,      :limit => Spree::Reviews::Config[:preview_size], :order=>"created_at desc"

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe ReviewsController do
   render_views
@@ -28,7 +28,7 @@ describe ReviewsController do
       post :create, :product_id => @product.permalink, :review => { :rating => '5', :title => "My Review", :review => 'Test Content', :name => 'Test User' }
 
       Review.count.should == 1
-      Review.approved.count.should == 0
+      Review.visible.count.should == 0
 
       @product.reload
       @product.reviews.count.should == 1

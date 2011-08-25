@@ -4,7 +4,7 @@ class ReviewsController < Spree::BaseController
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
 
   def index
-    @approved_reviews = Review.approved.find_all_by_product_id(@product.id) 
+    @approved_reviews = Review.approved.find_all_by_product_id(@product.id)
   end
 
   def new
@@ -20,22 +20,22 @@ class ReviewsController < Spree::BaseController
     @review.product = @product
     @review.user = current_user if user_signed_in?
     @review.ip_address = request.remote_ip
-    
+
     authorize! :create, @review
-    
+
     if @review.save
       flash[:notice] = t('review_successfully_submitted')
       redirect_to (product_path(@product))
     else
-      render :action => "new" 
+      render :action => "new"
     end
   end
-  
+
   def terms
   end
-  
+
   private
-    
+
     def load_product
       @product = Product.find_by_permalink!(params[:product_id])
     end

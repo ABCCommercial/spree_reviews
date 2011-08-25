@@ -1,15 +1,39 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ReviewsController do
+  render_views
 
-  #Delete these examples and add some real ones
-  it "should use ReviewsController" do
-    controller.should be_an_instance_of(ReviewsController)
+  before(:each) do
+    @product = valid_product!(:permalink => 'nifty-product')
   end
 
+  it "GET 'index' should list only the approved reviews" do
+    @published = valid_review!(@product, :title => "My Great Review", :approved => true)
+    @pending   = valid_review!(@product, :title => "Offtopic Review", :approved => false)
 
-  it "GET 'submit' should be successful" do
-    get 'submit'
+    get :index, :product_id => @product.permalink
+
     response.should be_success
+    response.body.should =~ /My Great Review/
+    response.body.should_not =~ /Offtopic Review/
+  end
+
+  context "authenticated User" do
+    before(:each) do
+      @user = valid_user!
+      sign_in @user
+    end
+
+    it "POST 'create' should create a review" do
+      post :create, :product_id => @product.permalink, :review => { :rating => '5', :title => "My Review", :review => 'Test Content', :name => 'Test User' }
+
+      Review.count.should == 1
+      Review.approved.count.should == 0
+
+      @product.reload
+      @product.reviews.count.should == 1
+      @product.reviews.approved.count.should == 0
+      @product.avg_rating.should == 0
+    end
   end
 end

@@ -1,2 +1,1 @@
-
-<%= render :partial => 'shared/reviews' %>
+<%= render :partial => 'shared/reviews', :locals => { :reviews => @approved_reviews, :product => @product } %>

@@ -10,14 +10,12 @@ class Review < ActiveRecord::Base
   after_destroy :recalculate_rating
 
   default_scope order("reviews.created_at DESC")
-  scope :approved,  where("approved = ?", true)
+  scope :approved, lambda {|*args| {:conditions => ["(? = ?) or (approved = ?)", Spree::Reviews::Config[:include_unapproved_reviews], true, true ]}}
   scope :not_approved, where("approved = ?", false)
-
-  scope :approval_filter, lambda {|*args| {:conditions => ["(? = ?) or (approved = ?)", Spree::Reviews::Config[:include_unapproved_reviews], true, true ]}}
 
   scope :oldest_first, :order => "created_at asc"
   scope :preview,      :limit => Spree::Reviews::Config[:preview_size], :order=>"created_at desc"
-  attr_protected :user_id, :product_id, :ip_address
+  attr_protected :user_id, :product_id, :ip_address, :approved
 
   def feedback_stars
     return 0 if feedback_reviews.count <= 0

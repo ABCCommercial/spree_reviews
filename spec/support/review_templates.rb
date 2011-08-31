@@ -1,10 +1,5 @@
 def valid_review(product, options={})
-  defaults = { :title   => "Test Review",
-               :name    => "Test User",
-               :review => "My review about #{product.name}",
-               :rating  => 3
-             }
-  r = Review.new(defaults.merge(options))
+  r = Review.new(default_review_fields(options))
   r.approved = options[:approved] unless options[:approved].blank?
   r.product = product
   r
@@ -14,4 +9,12 @@ def valid_review!(product, options={})
   r = valid_review(product, options)
   r.save!
   r
+end
+
+def default_review_fields(options={})
+  { :title  => "Test Review",
+    :name   => "Test User",
+    :review => "My review",
+    :rating => 3
+  }.merge(options)
 end

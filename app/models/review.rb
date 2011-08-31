@@ -5,6 +5,7 @@ class Review < ActiveRecord::Base
 
   validates_presence_of :name, :review
   validates_numericality_of :rating, :only_integer => true
+  validates :product, :presence => true
 
   after_save :recalculate_rating
   after_destroy :recalculate_rating

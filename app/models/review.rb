@@ -18,7 +18,8 @@ class Review < ActiveRecord::Base
 
   scope :oldest_first, :order => "created_at asc"
   scope :preview,      :limit => Spree::Reviews::Config[:preview_size], :order=>"created_at desc"
-  attr_protected :user_id, :product_id, :ip_address, :approved
+  #  CVE-2013-0276 is a vulnerability where a request can be crafted to surpass the protection; to deal with this, as upgrade to fix version is not possible; suggested workaround of replacing attr_protected with attr_accessible is being used
+  attr_accessible :rating, :review, :name
 
   def feedback_stars
     return 0 if feedback_reviews.count <= 0

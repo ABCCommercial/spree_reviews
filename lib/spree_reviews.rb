@@ -1,6 +1,5 @@
 require 'spree_core'
 require 'spree_auth'
-require 'spree_reviews_hooks'
 
 module SpreeReviews
   class Engine < Rails::Engine

@@ -4,12 +4,6 @@ Deface::Override.new(:virtual_path => "products/show",
                      :text => "<%= render :partial => 'shared/reviews', :locals => { :product => @product, :reviews => @product.reviews.visible } %>",
                      :disabled => false)
 
-Deface::Override.new(:virtual_path => "layouts/spree_application",
-                     :name => "converted_inside_head_555899529",
-                     :insert_after => "[data-hook='inside_head'], #inside_head[data-hook]",
-                     :text => " <%= stylesheet_link_tag('reviews.css') %> ",
-                     :disabled => false)
-
 Deface::Override.new(:virtual_path => "shared/_footer",
                      :name => "converted_footer_right_315720585",
                      :insert_after => "[data-hook='footer_right'], #footer_right[data-hook]",

@@ -15,7 +15,7 @@ Deface::Override.new(:virtual_path => "shared/_footer",
 
 Deface::Override.new(:virtual_path => "admin/shared/_product_sub_menu",
                      :name => "converted_admin_product_sub_tabs_133298913",
-                     :insert_after => "[data-hook='admin_product_sub_tabs'], #admin_product_sub_tabs[data-hook]",
+                     :insert_bottom => "[data-hook='admin_product_sub_tabs'], #admin_product_sub_tabs[data-hook]",
                      :text => "
        <%= tab(:reviews, :label => 'review_management') %>
      ",
